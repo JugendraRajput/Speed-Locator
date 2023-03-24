@@ -32,7 +32,6 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.Priority;
 import com.google.android.material.button.MaterialButton;
-import com.jdgames.location.R;
 
 import java.util.List;
 import java.util.Locale;
