@@ -1,0 +1,24 @@
+apply plugin: 'com.android.application'
+android {
+    namespace 'com.jdgames.speedlocator'
+    compileSdkVersion 33
+    defaultConfig {
+        applicationId "com.jdgames.speedlocator"
+        minSdkVersion 16
+        targetSdkVersion 33
+        versionCode 1
+        versionName "0.0.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.material:material:1.8.0'
+}
