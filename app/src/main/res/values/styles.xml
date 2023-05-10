@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">#515151</item>
         <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">#FFFFFF</item>
+        <item name="android:windowBackground">#FBC02D</item>
         <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
     </style>

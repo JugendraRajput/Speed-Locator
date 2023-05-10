@@ -2,5 +2,5 @@
     <string name="app_name">Speed Locator</string>
     <string name="km_h">km/h</string>
     <string name="loading">---</string>
-    <string name="button_txt">CLICK ME</string>
+    <string name="button_txt">Check Speed</string>
 </resources>
