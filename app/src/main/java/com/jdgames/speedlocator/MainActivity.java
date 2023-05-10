@@ -32,6 +32,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.Priority;
 import com.google.android.material.button.MaterialButton;
+import com.skyfishjy.library.RippleBackground;
 
 import java.util.List;
 import java.util.Locale;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     int OPEN_GPS_SETTINGS_REQUIRED = 106;
 
     Activity activity = MainActivity.this;
-
+    RippleBackground rippleBackground;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         speedTextView = findViewById(R.id.speedTextView);
         kmTextView = findViewById(R.id.kmTextView);
         button = findViewById(R.id.button);
+
+        rippleBackground = findViewById(R.id.ripple_animation);
 
         button.setOnClickListener(view -> {
             button.setEnabled(false);
@@ -78,24 +81,20 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (requestCode == 0) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-                } else {
                     Toast.makeText(activity, "Please enable location permission", Toast.LENGTH_SHORT).show();
-                    Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
-                    myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
-                    myAppSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    activity.startActivityForResult(myAppSettings, OPEN_APP_SETTINGS);
+                } else {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
                 }
             }
             if (requestCode == 1) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION_REQUIRED);
-                } else {
                     Toast.makeText(activity, "Please enable location permission", Toast.LENGTH_SHORT).show();
                     Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
                     myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
                     myAppSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     activity.startActivityForResult(myAppSettings, OPEN_APP_SETTINGS_REQUIRED);
+                } else {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION_REQUIRED);
                 }
             }
         } else {
@@ -134,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     public void getLocation() {
+        rippleBackground.startRippleAnimation();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         button.setEnabled(false);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     public void UpdateLocationInfo(Location location) {
