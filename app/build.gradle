@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 android {
+    compileSdk 34
     namespace 'com.jdgames.speedlocator'
-    compileSdkVersion 33
     defaultConfig {
         applicationId "com.jdgames.speedlocator"
-        minSdkVersion 16
-        targetSdkVersion 33
+        minSdk 16
+        targetSdk 34
         versionCode 2
         versionName "0.0.2"
     }
