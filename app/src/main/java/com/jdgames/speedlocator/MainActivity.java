@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     Activity activity = MainActivity.this;
     RippleBackground rippleBackground;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +74,29 @@ public class MainActivity extends AppCompatActivity {
             button.setEnabled(false);
             CheckPermission(1);
         });
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                UpdateLocationInfo(location);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
 
         CheckPermission(0);
     }
@@ -134,32 +158,11 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     public void getLocation() {
         rippleBackground.startRippleAnimation();
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                UpdateLocationInfo(location);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
         button.setEnabled(false);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 
+    @SuppressLint("SetTextI18n")
     public void UpdateLocationInfo(Location location) {
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
@@ -204,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                                                         speedTextView.setTextColor(getResources().getColor(R.color.c12));
                                                     } else {
                                                         speedTextView.setTextColor(getResources().getColor(R.color.c13));
-                                                        speedTextView.setText("Keep\nGO Slow");
+                                                        speedTextView.setText("GO Slow");
                                                         kmTextView.setVisibility(View.INVISIBLE);
                                                     }
                                                 }
@@ -235,11 +238,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (listAddresses.get(0).getAdminArea() != null) {
-                    address += listAddresses.get(0).getAdminArea()+ " - ";
+                    address += listAddresses.get(0).getAdminArea() + " - ";
                 }
 
                 if (listAddresses.get(0).getPostalCode() != null) {
-                    address += listAddresses.get(0).getPostalCode() ;
+                    address += listAddresses.get(0).getPostalCode();
                 }
             }
             Log.d("TAG", "Address: " + address);
